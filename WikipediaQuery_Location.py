@@ -41,6 +41,7 @@ for results in parsed_json['query']['geosearch']:
 
     # Send HTTP POST request
     request = urllib2.Request(url, data)
+    print url + data
     response = urllib2.urlopen(request)
     
     #Need to come back and optimize

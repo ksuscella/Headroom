@@ -1,0 +1,19 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.panel-SCROLL {
+  max-height: 200px;
+  overflow-y: scroll;
+  height: 300px;
+  
+}
+
+.p-left {
+  text-align: left;
+  
+}
