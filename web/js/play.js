@@ -42,18 +42,23 @@ function letsPlay() {
 }
 function geoSpeakLocate() {
     //code
-    showConsole(navigator.geolocation);
+    
     if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(mapIt)
+    } else {
+        speak("Something is wrong, I can not locate your position");
+    }
+          
+}
+
+function mapIt(position) {
             
-              lat = position.coords.latitude;
-              lng = position.coords.longitude;
-              speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
-              speak("Lets check what's around you");
-              findData();
-        }
-    )
-    };
+    lat = position.coords.latitude;
+    lng = position.coords.longitude;
+    speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
+    speak("Lets check what's around you");
+    findData();
+
 }
 
 function letsPause() {
