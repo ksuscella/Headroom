@@ -1,1 +1,1 @@
-web: python webserver/main.py
+web: python webserver/MaxWeb.py
