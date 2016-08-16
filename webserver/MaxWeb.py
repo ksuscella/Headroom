@@ -9,7 +9,7 @@ from WikipediaQuery_Id import WikiQueryId
 
 # Simple web server that serves html content from /Users/kirk/Documents/GoMaxGo/headroom/web/
 # url http://localhost:8889/web/index.html
-
+# heroku logs --app headroom
 from tornado.log import enable_pretty_logging
 enable_pretty_logging() 
 
@@ -36,12 +36,21 @@ class RESTHandler(tornado.web.RequestHandler):
         
         self.write(a.getResults())
         
+def main():
+    application = tornado.web.Application([
+        (r"/", RESTHandler),
+        (r"/web/(.*)",tornado.web.StaticFileHandler, {"path": static_path}) 
+    ])
+    #application.listen(8889)
+    #tornado.ioloop.IOLoop.instance().start()
 
-application = tornado.web.Application([
-    (r"/", RESTHandler),
-    (r"/web/(.*)",tornado.web.StaticFileHandler, {"path": static_path}) 
-])
- 
-if __name__ == "__main__":
-    application.listen(8889)
+    #Match
+    http_server = tornado.httpserver.HTTPServer(application)
+    port = int(os.environ.get("PORT", 5000))
+    http_server.listen(port)
     tornado.ioloop.IOLoop.instance().start()
+
+
+
+if __name__ == "__main__":
+    main()
