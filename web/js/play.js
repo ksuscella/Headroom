@@ -42,7 +42,7 @@ function letsPlay() {
 }
 function geoSpeakLocate() {
     //code
-    
+    speak("starting geo");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(mapIt)
     } else {
