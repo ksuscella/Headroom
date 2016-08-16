@@ -45,9 +45,9 @@ def main():
     #tornado.ioloop.IOLoop.instance().start()
 
     #Match
-    http_server = tornado.httpserver.HTTPServer(application)
+    #http_server = tornado.httpserver.HTTPServer(application)
     port = int(os.environ.get("PORT", 5000))
-    http_server.listen(port)
+    application.listen(port)
     tornado.ioloop.IOLoop.instance().start()
 
 
