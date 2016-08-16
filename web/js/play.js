@@ -24,6 +24,7 @@ function letsPlay() {
 
     speak('Welcome to HeadRoom');
     speak('I am at beta version 0.1');
+    /*
     speak('Lets explore the world around you');
     speak('Before we begin there are a couple of things to note');
     speak('This version does not keep track of articles');
@@ -33,6 +34,7 @@ function letsPlay() {
     speak('Thank you for listening, I really appreciate it!');
     speak('Today is a beautiful day, lets begin');
     speak('Current Date and Time is ' + getFormatDate());
+    */
     geoSpeakLocate();
     looper();
     
@@ -45,8 +47,8 @@ function geoSpeakLocate() {
             
               lat = position.coords.latitude
               lng = position.coords.longitude
-              //speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
-              //speak("Lets check what's around you");
+              speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
+              speak("Lets check what's around you");
               findData();
         }
     )
@@ -161,7 +163,7 @@ function findData() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
         txt = xhttp.responseText;
        
-        //showConsole(txt);
+        showConsole(txt);
         json_results = JSON.parse(txt);
         //showConsole(json_results.length);
         pickArticle(json_results);
