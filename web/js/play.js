@@ -42,11 +42,12 @@ function letsPlay() {
 }
 function geoSpeakLocate() {
     //code
+    showConsole(navigatior.geolocation);
     if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             
-              lat = position.coords.latitude
-              lng = position.coords.longitude
+              lat = position.coords.latitude;
+              lng = position.coords.longitude;
               speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
               speak("Lets check what's around you");
               findData();
