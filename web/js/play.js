@@ -24,17 +24,18 @@ function letsPlay() {
 
     speak('Welcome to HeadRoom');
     speak('I am at beta version 0.1');
-    /*
+    
     speak('Lets explore the world around you');
     speak('Before we begin there are a couple of things to note');
     speak('This version does not keep track of articles');
     speak('As you listen to Head Room, it will randomly assign an article');
     speak('This means for this version, you could get article duplication');
     speak('This issue will be fixed in the next version');
+    speak(' ');
     speak('Thank you for listening, I really appreciate it!');
     speak('Today is a beautiful day, lets begin');
     speak('Current Date and Time is ' + getFormatDate());
-    */
+    
     geoSpeakLocate();
     looper();
     
@@ -42,7 +43,7 @@ function letsPlay() {
 }
 function geoSpeakLocate() {
     //code
-    speak("starting geo");
+    //speak("starting geo");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(mapIt)
     } else {
@@ -55,8 +56,8 @@ function mapIt(position) {
             
     lat = position.coords.latitude;
     lng = position.coords.longitude;
-    speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
-    speak("Lets check what's around you");
+    //speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
+    //speak("Lets check what's around you");
     findData();
 
 }
