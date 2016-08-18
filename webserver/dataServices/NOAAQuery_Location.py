@@ -29,8 +29,15 @@ data = urllib.urlencode(query_args)
 # Send HTTP POST request
 request = requests.get(url,data)
 if (request.ok):
+    print(request.content)
     jData = json.loads(request.content)
-    print jData
+    for x in range(0, 3):
+        print jData['time']['startPeriodName'][x]
+        #print jData['time']['tempLabel'][x]
+        #print jData['data']['temperature'][x]
+        #print jData['data']['weather'][x]
+        print jData['data']['text'][x]
+    print "current temperature: " + jData['currentobservation']['Temp']
 ##response = urllib2.urlopen(request)
 #print response.read()
 #parsed_json = json.load(response)
