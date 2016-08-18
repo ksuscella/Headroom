@@ -3,6 +3,7 @@ var lng = 0;    //Track User's Location to find geoArticles
 var user_state='PLAY'; //Options: PLAY PAUSE CONTINUE
 var instr_pause = 'Press <b>PAUSE</b> to see the world around you';         //Need to move text to a file
 var instr_cont = 'Press <b>CONTINUE</b> to listen to the world around you'; //Need to move text to a file
+var article_list = [];  //keep track of articles already played
 
 function speakSpeak() {
     //*** LETS GET THIS STARTED ***
@@ -22,18 +23,8 @@ function speakSpeak() {
 
 function letsPlay() {
 
-    speak('Welcome to HeadRoom');
-    speak('I am at beta version 0.1');
-    
+    speak('Welcome to HeadRoom');    
     speak('Lets explore the world around you');
-    speak('Before we begin there are a couple of things to note');
-    speak('This version does not keep track of articles');
-    speak('As you listen to Head Room, it will randomly assign an article');
-    speak('This means for this version, you could get article duplication');
-    speak('This issue will be fixed in the next version');
-    speak(' ');
-    speak('Thank you for listening, I really appreciate it!');
-    speak('Today is a beautiful day, lets begin');
     speak('Current Date and Time is ' + getFormatDate());
     
     geoSpeakLocate();
@@ -145,17 +136,35 @@ function showPosition(position) {
 }
 
 function pickArticle(json_results) {
-    speak("I found " + json_results.length + " interesting things around you");
-    //Randomly pick an article
-    //speak('Let me pick something for you');
+    var m_pageid = 0;
+    var m_title = '';
+    var m_dist = 99999;
+
     if (json_results.length == 0 ) {
         //Couldn't find anything
         speak("sorry, I couldn't find anything, try again shortly");
     } else {
-        rdm = randomNumber(1,json_results.length)-1;
-        showConsole(json_results[rdm].pageid);
-        speak("Researching on " + json_results[rdm].title);
-        findArticle(json_results[rdm].pageid);
+        //Loop over JSON
+        for (var key in json_results) {
+            //if (json_results.hasOwnProperty(key)) {
+            //Lets find the closest article
+            if (json_results[key].dist < m_dist) {
+                //Did we already pick this article?
+                if (article_list.indexOf(json_results[key].pageid) == -1) {
+                    m_dist = json_results[key].dist;
+                    m_pageid = json_results[key].pageid;
+                    m_title = json_results[key].title;
+                }
+            }
+        }
+    }
+    showConsole(m_pageid + ', ' + m_title + ', ' + m_dist);
+    //rdm = randomNumber(1,json_results.length)-1;
+    if (m_pageid != 0) {
+        article_list.push(m_pageid);
+        findArticle(m_pageid);   
+    } else {
+        speak("sorry, I couldn't find anything, try again shortly");
     }
 }
 
