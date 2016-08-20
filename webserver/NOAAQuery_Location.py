@@ -3,6 +3,7 @@ import urllib2
 import requests
 import json
 
+#website
 #http://forecast.weather.gov/MapClick.php?lat=26.918349&lon=-80.132422&FcstType=json
 #OpenWeatherMap ksuscella M@xH3adR00m
 #api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=5f018c2fe12dc2b622ee90163869bd6f
