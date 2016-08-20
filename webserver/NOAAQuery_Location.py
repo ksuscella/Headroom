@@ -40,9 +40,6 @@ class NOAAQueryLoc:
         
         #if (request.ok): -> Need to improve error handling
         jData = json.loads(request.content) #Get Info
-        
-        
-        return jData
     
         data_rt = []
         data = {}
