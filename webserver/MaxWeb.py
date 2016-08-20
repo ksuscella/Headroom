@@ -5,8 +5,8 @@ import os
 import logging
 
 from WikipediaQuery_Location import WikiQueryLoc
-from WikipediaQuery_Id import WikiQueryId
 from NOAAQuery_Location import NOAAQueryLoc
+from WikipediaQuery_Id import WikiQueryId
 
 # Simple web server that serves html content from /Users/kirk/Documents/GoMaxGo/headroom/web/
 # url http://localhost:8889/web/index.html
