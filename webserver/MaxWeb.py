@@ -6,6 +6,7 @@ import logging
 
 from WikipediaQuery_Location import WikiQueryLoc
 from WikipediaQuery_Id import WikiQueryId
+from NOAAQuery_Location import NOAAQueryLoc
 
 # Simple web server that serves html content from /Users/kirk/Documents/GoMaxGo/headroom/web/
 # url http://localhost:8889/web/index.html
@@ -27,7 +28,15 @@ class RESTHandler(tornado.web.RequestHandler):
             logging.info("RESTHandler Request - geo")
             logging.info(lat + ", " + lng)
             a = WikiQueryLoc(lat, lng)
-        
+            
+        if self.get_argument('type') == 'weather':
+            #Geo Service
+            lat = self.get_argument('getLat')
+            lng = self.get_argument('getLng')
+            logging.info("RESTHandler Request - weather")
+            logging.info(lat + ", " + lng)
+            a = NOAAQueryLoc(lat, lng)
+            
         if self.get_argument('type') == 'pageid':
             #PageID Service
             page_id = self.get_argument('getPageID')

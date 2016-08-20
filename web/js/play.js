@@ -4,6 +4,7 @@ var user_state='PLAY'; //Options: PLAY PAUSE CONTINUE
 var instr_pause = 'Press <b>PAUSE</b> to see the world around you';         //Need to move text to a file
 var instr_cont = 'Press <b>CONTINUE</b> to listen to the world around you'; //Need to move text to a file
 var article_list = [];  //keep track of articles already played
+var weather_cnt = 0;
 
 function speakSpeak() {
     //*** LETS GET THIS STARTED ***
@@ -25,11 +26,11 @@ function letsPlay() {
 
     speak('Welcome to HeadRoom');    
     speak('Lets explore the world around you');
+    speak(' ');
     speak('Current Date and Time is ' + getFormatDate());
     
     geoSpeakLocate();
     looper();
-    
 
 }
 function geoSpeakLocate() {
@@ -49,19 +50,23 @@ function mapIt(position) {
     lng = position.coords.longitude;
     //speak("I see your location is at " + round(lat,2) + " and " + round(lng,2));
     //speak("Lets check what's around you");
+    showConsole("weather count: " + weather_cnt);
+    if (weather_cnt == 0) {
+        findWeather();
+    }
     findData();
 
 }
 
 function letsPause() {
     //code
-    showConsole('PAUSE');
+    //showConsole('PAUSE');
     window.speechSynthesis.pause();
     window.speechSynthesis.cancel();
 }
 function letsContinue() {
     //code
-    showConsole('CONTINUE');
+    //showConsole('CONTINUE');
     speak('Glad to be back online');
     //speak('Lets see what\'s around you');
     geoSpeakLocate();
@@ -81,8 +86,14 @@ function looper() {
     if (user_state != 'PAUSE'){    
         setTimeout(function() {
         //Lets Pause
-            showConsole('looper executed');
+            //showConsole('looper executed');
+            
+            showConsole("weather: " + weather_cnt);
+            if (weather_cnt > 10) {
+                weather_cnt = 0;
+            }
             geoSpeakLocate();
+            weather_cnt += 1;
             looper();
             
         }, 30000); //30 seconds
@@ -98,7 +109,7 @@ function speakAndDelay(msg, delay) {
     voices = ['Karen', 'Alex', 'Daniel', 'Melina'];
     var u = new SpeechSynthesisUtterance();
     u.lang = 'en-US';
-    u.rate = 1.00;
+    u.rate = .90;
     u.pitch = .95;
     u.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Karen'; })[0];
     //sName = randomNumber(0,voices.length)-1;
@@ -142,7 +153,7 @@ function pickArticle(json_results) {
 
     if (json_results.length == 0 ) {
         //Couldn't find anything
-        speak("sorry, I couldn't find anything, try again shortly");
+        //speak("sorry, I couldn't find anything, try again shortly");
     } else {
         //Loop over JSON
         for (var key in json_results) {
@@ -158,13 +169,13 @@ function pickArticle(json_results) {
             }
         }
     }
-    showConsole(m_pageid + ', ' + m_title + ', ' + m_dist);
+    //showConsole(m_pageid + ', ' + m_title + ', ' + m_dist);
     //rdm = randomNumber(1,json_results.length)-1;
     if (m_pageid != 0) {
         article_list.push(m_pageid);
         findArticle(m_pageid);   
     } else {
-        speak("sorry, I couldn't find anything, try again shortly");
+        showConsole("sorry, I couldn't find anything, try again shortly");
     }
 }
 
@@ -179,7 +190,7 @@ function findData() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
         txt = xhttp.responseText;
        
-        showConsole(txt);
+        //showConsole(txt);
         json_results = JSON.parse(txt);
         //showConsole(json_results.length);
         pickArticle(json_results);
@@ -206,6 +217,25 @@ function findArticle(page_id) {
         
   };
   xhttp.open("GET", "../?type=pageid&getPageID="+page_id, true);
+  xhttp.send();
+}
+
+function findWeather() {
+  //Get Information
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+        txt = xhttp.responseText;
+       
+        json_results = JSON.parse(txt);
+        cur_tmp = json_results[0].current_temp;
+        speak("Current Temperature is " + cur_tmp + " degrees")
+        speak(json_results[1].day + " " + json_results[1].description)
+        
+    }
+        
+  };
+  xhttp.open("GET", "../?type=weather&getLat="+lat+"&getLng="+lng, true);
   xhttp.send();
 }
 

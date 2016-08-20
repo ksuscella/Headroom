@@ -1,7 +1,7 @@
-from WikipediaQuery_Location import WikiQueryLoc
+from NOAAQuery_Location import NOAAQueryLoc
 
 
-a = WikiQueryLoc('26.92', '-80.13')
+a = NOAAQueryLoc('26.92', '-80.13')
 print a.getResults()
 
 #import json
