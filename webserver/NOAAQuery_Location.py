@@ -1,7 +1,7 @@
 import urllib
 import urllib2
-import requests
 import json
+import requests
 
 #website
 #http://forecast.weather.gov/MapClick.php?lat=26.918349&lon=-80.132422&FcstType=json
@@ -41,6 +41,9 @@ class NOAAQueryLoc:
         #if (request.ok): -> Need to improve error handling
         jData = json.loads(request.content) #Get Info
         
+        
+        return jData
+    
         data_rt = []
         data = {}
         data['current_temp'] = jData['currentobservation']['Temp']
